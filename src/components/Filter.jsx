@@ -1,53 +1,47 @@
-// import React from 'react'
-import { MdKeyboardArrowDown } from "react-icons/md";
+import React, { useState } from 'react';
+import { MdKeyboardArrowDown ,MdOutlineFilterList } from "react-icons/md";
 
-function Filter() {
+function Filter({ buttonName, filterOptions }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div>
-      <div >
-        <div className="relative inline-block text-left">
-          <div>
-            <div className="h-96  w-80 bg-slate-50 rounded-md border-2 border-slate-600">
-                <div className="flex flex-row items-center justify-around bg-slate-50 h-12 w-full">
-                   <div>
-                   <h1 className="text-black font-bold  text">Refine by</h1>
-                   </div>
-                   <div> <button className="text-blue-700">Clear</button></div>
-                </div>
-                <div className="flex flex-col">
-                <div className="flex flex-row items-center justify-evenlyr  h-12 w-full border-2">
-                    <div><h1 className="text-black h-8 text ml-5 mr-24">Date Of Registration</h1></div>
-                    <div><MdKeyboardArrowDown /></div>
-                </div>
-                <div className="flex flex-row items-center jus h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Vendor Score</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className="flex flex-row items-center h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Rating</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className="flex flex-row items-center h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Status</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className="flex flex-row items-center  h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Type of business</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className="flex flex-row items-center  h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Location</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                <div className="flex flex-row  items-center h-12 w-full border-2">
-                    <h1 className="text-black h-8 text text ml-5 mr-24">Assign to</h1>
-                    <MdKeyboardArrowDown />
-                </div>
-                </div>
+    <div className="relative inline-block text-left">
+      <button
+        type="button"
+        className="flex items-center text-base w-28 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+        onClick={toggleDropdown}
+      >
+      <MdOutlineFilterList />
+        {buttonName}
+      </button>
+      {isOpen && (
+        <div className="w-80 bg-slate-50 rounded-md border-2 border-slate-200 mt-1">
+          <div className="flex rounded-md">
+            <div className="flex items-center justify-start ml-5 w-3/4 h-12">
+              <h1 className="text-black font-bold">Refine by</h1>
+            </div>
+            <div className="flex items-center justify-center h-12 w-1/4">
+              <button className="text-blue-700">Clear</button>
             </div>
           </div>
+          <div className="flex flex-col">
+            {filterOptions.map((option, index) => (
+              <div key={index} className="flex items-center w-full rounded-md border-2 mt-2">
+                <div className="flex items-center justify-start ml-5 w-3/4 h-12">
+                  <p className="text-black">{option.name}</p>
+                </div>
+                <div className="flex items-center justify-center h-12 w-1/4">
+                  {option.inputType === 'dropdown' ? <MdKeyboardArrowDown /> : null}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
